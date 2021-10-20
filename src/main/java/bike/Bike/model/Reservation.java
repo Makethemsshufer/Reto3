@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,27 +23,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "reservation")
 public class Reservation implements Serializable{
-    
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idReservation;
     private Date startDate;
     private Date DevolutionDate;
     private String status="created";
-    //private String score
+    private String score;
     
     
     @ManyToOne
-    @JoinColumn(name="idBike")
-    @JsonIgnoreProperties("reservation")
+    @JoinColumn(name="id")
+    @JsonIgnoreProperties("reservations")
     private Bike bike;
     
      
 
     @ManyToOne
     @JoinColumn(name = "idClient")
-    @JsonIgnoreProperties({"reservation","message"})
+    @JsonIgnoreProperties({"reservations","messages"})
     private Client client;
     
 
@@ -50,7 +52,7 @@ public class Reservation implements Serializable{
     //@OneToOne(cascade = (CascadeType.REMOVE),mappedBy ="reservation")
     //@JsonIgnoreProperties("score")
     //private Score score;+
-    
-
+  
+ 
   
 }

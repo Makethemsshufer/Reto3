@@ -26,16 +26,15 @@ public class ClientService {
         return clientRepository.getAll();
     }
 
-    public Optional<Client> getClient(int Client){
-        return clientRepository.getClient(Client);
+    public Optional<Client> getClient(int clientId){
+        return clientRepository.getClient(clientId);
     }
     
     public Client save(Client client) {
-        if (client.getId() == null) {
+        if (client.getIdClient()== null) {
             return clientRepository.save(client);
         } else {
-            Optional<Client> myClient = clientRepository.getClient(client.getId());
-
+            Optional<Client> myClient = clientRepository.getClient(client.getIdClient());
             if (myClient.isEmpty()) {
                 return clientRepository.save(client);
             } else {
@@ -45,21 +44,21 @@ public class ClientService {
     }
 
     
-     public Client update (Client client){
-        if (client.getId()!=null){
-            Optional<Client> myclient = clientRepository.getClient(client.getId());
-            if (!myclient.isEmpty()){
-                if (client.getName()!=null){
-                    myclient.get().setName(client.getName());
+     public Client update(Client client){
+        if(client.getIdClient()!=null){
+            Optional<Client> myClient= clientRepository.getClient(client.getIdClient());
+            if(!myClient.isEmpty()){
+                if(client.getName()!=null){
+                    myClient.get().setName(client.getName());
                 }
-                if (client.getAge()!=null){
-                    myclient.get().setAge(client.getAge());
+                if(client.getAge()!=null){
+                    myClient.get().setAge(client.getAge());
                 }
-                if (client.getPassword()!=null){
-                    myclient.get().setPassword(client.getPassword());
+                if(client.getPassword()!=null){
+                    myClient.get().setPassword(client.getPassword());
                 }
-                clientRepository.save(myclient.get());
-                return  myclient.get();
+                clientRepository.save(myClient.get());
+                return myClient.get();
             }else{
                 return client;
             }
@@ -68,8 +67,8 @@ public class ClientService {
         }
     }
     
-      public boolean deleteClient(int id){
-        Boolean myClient = getClient(id).map(client -> {
+      public boolean deleteClient(int clientId){
+        Boolean myClient = getClient(clientId).map(client -> {
             clientRepository.delete(client);
             return true;
         }).orElse(false);

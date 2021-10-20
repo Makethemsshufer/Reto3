@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "bike")
 public class Bike  implements Serializable{
     
 @Id
@@ -37,10 +39,10 @@ public class Bike  implements Serializable{
 private Integer id;
 
 @Column(nullable = false, length = 45)
-private String brand;
+private String name;
 
 @Column(nullable = false, length = 45)
-private String name;
+private String brand;
 
 @Column(nullable = false, length = 4)
 private Integer year;
@@ -52,8 +54,8 @@ private String description;
 
 
 @ManyToOne
-@JoinColumn (name = "idCategory")
-@JsonIgnoreProperties ("category")
+@JoinColumn (name = "categoryId")
+@JsonIgnoreProperties ("bikes")
 private Category category;
 
 
@@ -63,7 +65,7 @@ private Category category;
 private List<Message> message;
 
 @OneToMany (cascade = {CascadeType.PERSIST}, mappedBy = "bike")
-@JsonIgnoreProperties ({"reservation, message"})
+@JsonIgnoreProperties ({"bike", "client"})
 private List<Reservation> reservation;
 
 }

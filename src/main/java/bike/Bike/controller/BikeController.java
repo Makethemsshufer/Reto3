@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/Bike")
-//@CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class BikeController {
     
     @Autowired
@@ -40,29 +40,26 @@ public class BikeController {
     public List<Bike> getBikes(){
         return bikeService.getAll();
     }
-    
+
     @GetMapping("/{id}")
-    public Optional<Bike> getBike(@PathVariable("id") int id){
-        return bikeService.getBike(id);
+    public Optional<Bike> getBike(@PathVariable("id") int bikeId) {
+        return bikeService.getBike(bikeId);
     }
-            
-            
+
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Bike save(@RequestBody Bike bike){
+    public Bike save(@RequestBody Bike bike) {
         return bikeService.save(bike);
     }
-    
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Bike update(@RequestBody Bike bike){
+    public Bike update(@RequestBody Bike bike) {
         return bikeService.update(bike);
     }
-    
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id") int id) {
-        return bikeService.deleteBike(id);
+    public boolean delete(@PathVariable("id") int bikeId) {
+        return bikeService.deleteBike(bikeId);
     } 
-    
 }

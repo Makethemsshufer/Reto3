@@ -26,8 +26,8 @@ public class CategoryService {
         return categoryRepository.getAll();
     }
 
-    public Optional<Category> getCategory(int Category) {
-        return categoryRepository.getCategory(Category);
+    public Optional<Category> getCategory(int CategoryId) {
+        return categoryRepository.getCategory(CategoryId);
     }
 
     public Category save(Category category) {
@@ -61,8 +61,8 @@ public class CategoryService {
     }
 
     
-      public boolean deleteCategory(int id){
-        Boolean myCategory = getCategory(id).map(category -> {
+      public boolean deleteCategory(int categoryId){
+        Boolean myCategory = getCategory(categoryId).map(category -> {
             categoryRepository.delete(category);
             return true;
         }).orElse(false);

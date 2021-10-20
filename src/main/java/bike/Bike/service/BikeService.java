@@ -7,7 +7,6 @@ package bike.Bike.service;
 
 import bike.Bike.model.Bike;
 import bike.Bike.repository.BikeRepository;
-import bike.Bike.repository.crud.BikeCrudRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,27 +49,27 @@ public class BikeService {
         }
     }
     
-    public Bike update (Bike bike){
-        if (bike.getId()!=null){
-            Optional<Bike> myBike = bikeRepository.getBike(bike.getId());
-            if (!myBike.isEmpty()){
-                if (bike.getName()!=null){
+    public Bike update(Bike bike){
+        if(bike.getId()!=null){
+            Optional<Bike> myBike=bikeRepository.getBike(bike.getId());
+            if(!myBike.isEmpty()){
+                if(bike.getName()!=null){
                     myBike.get().setName(bike.getName());
                 }
-                if (bike.getBrand() !=null){
+                if(bike.getBrand()!=null){
                     myBike.get().setBrand(bike.getBrand());
                 }
-                if (bike.getYear() !=null){
+                if(bike.getYear()!=null){
                     myBike.get().setYear(bike.getYear());
                 }
-                if (bike.getDescription() !=null){
+                if(bike.getDescription()!=null){
                     myBike.get().setDescription(bike.getDescription());
                 }
-                if (bike.getCategory() !=null){
+                if(bike.getCategory()!=null){
                     myBike.get().setCategory(bike.getCategory());
                 }
                 bikeRepository.save(myBike.get());
-                return  myBike.get();
+                return myBike.get();
             }else{
                 return bike;
             }
@@ -79,8 +78,8 @@ public class BikeService {
         }
     }
     
-    public boolean deleteBike(int id){
-        Boolean myByke = getBike(id).map(bike -> {
+    public boolean deleteBike(int bikeId){
+        Boolean myByke = getBike(bikeId).map(bike -> {
             bikeRepository.delete(bike);
             return true;
         }).orElse(false);

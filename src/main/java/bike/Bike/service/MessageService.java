@@ -22,20 +22,19 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public List<Message> getAll() {
+    public List<Message> getAll(){
         return messageRepository.getAll();
     }
 
-    public Optional<Message> getMessage(int Message){
-        return messageRepository.getMessage(Message);
+    public Optional<Message> getMessage(int messageId){
+        return messageRepository.getMessage(messageId);
     }
     
         public Message save(Message message){
-        if (message.getId()==null){
+        if (message.getIdMessage()==null){
             return messageRepository.save(message);
         }else{
-            Optional<Message> myMessage = messageRepository.getMessage(message.getId());
-            
+            Optional<Message> myMessage = messageRepository.getMessage(message.getIdMessage());            
             if (myMessage.isEmpty()){
                 return messageRepository.save(message);
             }else{
@@ -44,9 +43,9 @@ public class MessageService {
         }
     }
 
-         public Message update(Message message){
-        if(message.getId()!=null){
-            Optional<Message> myMessage= messageRepository.getMessage(message.getId());
+ public Message update(Message message){
+        if(message.getIdMessage()!=null){
+            Optional<Message> myMessage= messageRepository.getMessage(message.getIdMessage());
             if(!myMessage.isEmpty()){
                 if(message.getMessageText()!=null){
                     myMessage.get().setMessageText(message.getMessageText());
@@ -62,8 +61,8 @@ public class MessageService {
     }
    
         
-   public boolean deleteMessage(int id){
-        Boolean myMessage = getMessage(id).map(message -> {
+   public boolean deleteMessage(int messageId){
+        Boolean myMessage = getMessage(messageId).map(message -> {
             messageRepository.delete(message);
             return true;
         }).orElse(false);

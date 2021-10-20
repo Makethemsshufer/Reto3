@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +21,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "message")
 public class Message implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idMessage;
     
     @Column(nullable = false, length = 250)
     private String messageText;
@@ -33,13 +35,14 @@ public class Message implements Serializable{
     
  
     @ManyToOne
-    @JoinColumn(name="idBike")
-    @JsonIgnoreProperties({"message", "client", "reservation"})
+    @JoinColumn(name="id")
+    @JsonIgnoreProperties({"messages", "client", "reservations"})
     private Bike bike;
 
     @ManyToOne
     @JoinColumn(name="clientId")
-    @JsonIgnoreProperties({"message", "reservation", "client"})
+    @JsonIgnoreProperties({"messages", "reservations", "client"})
     private Client client;
+    
     
 }

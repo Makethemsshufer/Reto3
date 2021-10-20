@@ -26,17 +26,17 @@ public class ReservationService {
         return reservationRepository.getAll();
     }
 
-    public Optional<Reservation> getReservation(int Reservation){
-        return reservationRepository.getReservation(Reservation);
+    public Optional<Reservation> getReservation(int reservationId){
+        return reservationRepository.getReservation(reservationId);
     }
     
-        public Reservation save(Reservation reservation) {
-        if (reservation.getId() == null) {
+        public Reservation save(Reservation reservation){
+        if (reservation.getIdReservation()== null) {
             return reservationRepository.save(reservation);
         } else {
-            Optional<Reservation> myReservation = reservationRepository.getReservation(reservation.getId());
+            Optional<Reservation> myReservation = reservationRepository.getReservation(reservation.getIdReservation());
 
-            if (myReservation.isEmpty()) {
+            if (myReservation.isEmpty()){
                 return reservationRepository.save(reservation);
             } else {
                 return reservation;
@@ -45,8 +45,8 @@ public class ReservationService {
     }
     
     public Reservation update(Reservation reservation){
-        if(reservation.getId()!=null){
-            Optional<Reservation> myReservation= reservationRepository.getReservation(reservation.getId());
+        if(reservation.getIdReservation()!=null){
+            Optional<Reservation> myReservation= reservationRepository.getReservation(reservation.getIdReservation());
             if(!myReservation.isEmpty()){
 
                 if(reservation.getStartDate()!=null){
@@ -66,10 +66,10 @@ public class ReservationService {
         }else{
             return reservation;
         }
-    }    
+    }
         
-          public boolean deleteReservation(int id){
-        Boolean myReservation = getReservation(id).map(reservation -> {
+          public boolean deleteReservation(int reservationId){
+        Boolean myReservation = getReservation(reservationId).map(reservation -> {
             reservationRepository.delete(reservation);
             return true;
         }).orElse(false);
