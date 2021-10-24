@@ -11,21 +11,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
+@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Table(name = "score")
 public class Score {
     
     @Id
     @GeneratedValue(strategy = (GenerationType.IDENTITY))
-    private Integer id;
+    private Integer idScore;
     
     @Column(nullable = false, length = 250)
     private String messageText;
@@ -35,5 +36,6 @@ public class Score {
    
     @OneToOne
     @JoinColumn(name = "idReservation")
+    @JsonIgnoreProperties("score")
     private Reservation reservation;
 }

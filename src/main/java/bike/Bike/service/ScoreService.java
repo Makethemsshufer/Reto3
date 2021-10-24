@@ -18,26 +18,62 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ScoreService {
-    
+   
     @Autowired
     private ScoreRepository scoreRepository;
-    
-    public List<Score> getAll(){
+
+    public List<Score> getAll() {
         return scoreRepository.getAll();
     }
 
-    
-    public Score save(Score score){
-        if (score.getId()==null){
-            return scoreRepository.save(score);
-        }else{
-            Optional<Score> myScore = scoreRepository.getScore(score.getId());
-            
-            if (myScore.isEmpty()){
+    public Optional<Score> getScore(int scoreId) {
+        return scoreRepository.getScore(scoreId);
+    }
+
+    public Score save(Score score) {
+        if (score.getStars() >= 0 && score.getStars() <= 5) {
+            if (score.getIdScore() == null) {
                 return scoreRepository.save(score);
-            }else{
+            } else {
+                Optional<Score> e = scoreRepository.getScore(score.getIdScore());
+                if (e.isEmpty()) {
+                    return scoreRepository.save(score);
+                }
+            }
+
+        }
+        return score;
+    }
+    
+    public boolean deleteScore(int id) {
+
+        Optional<Score> score = getScore(id);
+
+        if (score.isEmpty()) {
+            return false;
+        } else {
+            scoreRepository.delete(score.get());
+            return true;
+        }
+    }
+    
+    public Score updateScore(Score score) {
+        if (score.getIdScore() != null) {
+            Optional<Score> e = scoreRepository.getScore(score.getIdScore());
+            if (!e.isEmpty()) {
+                if (score.getMessageText() != null) {
+                    e.get().setMessageText(score.getMessageText());
+                }
+                if (score.getStars() != null && score.getStars() >= 0 && score.getStars() <= 5) {
+                    e.get().setStars(score.getStars());
+                }
+                scoreRepository.save(e.get());
+                return e.get();
+            } else {
                 return score;
             }
+        } else {
+            return score;
         }
     }
     
